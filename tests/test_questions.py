@@ -1,10 +1,12 @@
 import pytest
-import time
 import allure
 from pages.main_page import MainPage
 from locators.main_page_locators import MainPageLocators
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-class TestQuestions(MainPage):
+
+class TestQuestions:
 
     @pytest.mark.parametrize("dict_questions", [
         ({
@@ -56,20 +58,31 @@ class TestQuestions(MainPage):
             "allure": "Я жизу за МКАДом, привезёте?"
         }),
     ])
+    @allure.title("Проверка ответов на вопросы")
+    @allure.description("Проверка отображения ответа на вопрос на главной странице")
     def test_clicking_questions_displays_correct_answers(self, dict_questions, driver_start):
+        main_page = MainPage(driver_start)
+
         allure.dynamic.title(dict_questions["allure"])
-        allure.dynamic.description("Проверка отображения ответа на вопрос")
 
-        # Задержка перед скроллом к элементу
-        time.sleep(1)
-        self.scroll_to_element(dict_questions["main_locator"], driver_start)
+        # Прокручиваем к самому низу страницы
+        driver_start.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-        # Задержка перед кликом на элемент
-        time.sleep(1)
-        self.click_to_element(dict_questions["main_locator"], driver_start)
+        # Прокручиваем к элементу и ждем его появления
+        main_page.scroll_to_element(dict_questions["main_locator"])
+        WebDriverWait(driver_start, 10).until(
+            EC.element_to_be_clickable(dict_questions["main_locator"])
+        )
 
-        # Задержка перед получением текста элемента
-        time.sleep(1)
-        answer_text = self.get_text_from_element(dict_questions["answer_text_locator"], driver_start)
+        # Нажимаем на вопрос
+        main_page.click_to_element(dict_questions["main_locator"])
 
-        assert dict_questions["questions_text"] in answer_text, f"Expected answer text: '{dict_questions['questions_text']}', but got: '{answer_text}'"
+        # Ожидаем отображения ответа и получаем текст
+        WebDriverWait(driver_start, 10).until(
+            EC.visibility_of_element_located(dict_questions["answer_text_locator"])
+        )
+        answer_text = main_page.get_text_from_element(dict_questions["answer_text_locator"])
+
+        assert dict_questions["questions_text"] in answer_text, (
+            f"Expected answer text: '{dict_questions['questions_text']}', but got: '{answer_text}'"
+        )
