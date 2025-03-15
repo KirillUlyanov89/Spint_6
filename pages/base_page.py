@@ -16,7 +16,7 @@ class BasePage:
 
     def click_to_element(self, locator):
         """Клик на элемент."""
-        # Здесь не требуется передача driver, так как он доступен как self.driver
+
         element = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(locator)
         )
