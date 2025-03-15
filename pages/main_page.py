@@ -40,4 +40,3 @@ class MainPage(BasePage):
         self.click_to_element(MainPageLocators.what_is_the_price)
         return self.get_text_from_element(MainPageLocators.what_is_the_price_answer)
 
-    # Подобные методы могут быть добавлены для других вопросов и ответов.
