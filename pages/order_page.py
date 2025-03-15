@@ -32,7 +32,6 @@ class OrderPage(MainPage):
         self.add_text_to_element(address_locator, address)
         self.add_metro_in_dropdown_menu(metro_locator, metro)
         self.add_text_to_element(phone_locator, phone)
-        # Убираем лишний параметр 'driver'
         self.click_to_element(OrderPageLocators.next_button)
 
     def add_fields_in_about_rent(self, date_locator, date,
