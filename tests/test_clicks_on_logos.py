@@ -24,13 +24,13 @@ class TestClicksOnLogos:
         driver_start.switch_to.window(driver_start.window_handles[1])  # Переход на новую вкладку
         main_page.verify_url_contains("dzen.ru/")  # Проверка URL
 
-# В классе MainPage добавляем метод verify_url_contains для проверки URL
+
 class MainPage(BasePage):
 
     @allure.step('Проверяем, что URL содержит {expected_partial_url}')
     def verify_url_contains(self, expected_partial_url):
         """Функция для ожидания и проверки части URL."""
-        # Ожидание, что текущий URL содержит ожидаемую часть
+
         WebDriverWait(self.driver, 10).until(
             EC.url_contains(expected_partial_url)
         )
