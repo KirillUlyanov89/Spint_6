@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-
+# ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
 
 class OrderPageLocators:
     name_field = (By.CSS_SELECTOR, "[placeholder = '* Имя']")

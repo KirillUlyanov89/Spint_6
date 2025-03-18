@@ -1,7 +1,7 @@
 from selenium.webdriver.common.keys import Keys
 from locators.order_page_locators import OrderPageLocators
 from pages.main_page import MainPage
-
+# ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
 class OrderPage(MainPage):
 
     def add_text_to_element(self, locator, text):
@@ -13,15 +13,18 @@ class OrderPage(MainPage):
         element.send_keys(Keys.DOWN)
         element.send_keys(Keys.ENTER)
 
+    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
     def add_data_to_when_to_bring_a_scooter_field(self, locator, date):
         element = self.find_element_with_wait(locator)
         element.send_keys(date)
         element.send_keys(Keys.ENTER)
 
+    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
     def select_rental_period(self, field_locator, duration_locator):
         self.find_element_with_wait(field_locator).click()
         self.find_element_with_wait(duration_locator).click()
 
+    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
     def add_fields_in_who_is_the_scooter_for(self, name_locator, name,
                                              surname_locator, surname,
                                              address_locator, address,
@@ -34,6 +37,7 @@ class OrderPage(MainPage):
         self.add_text_to_element(phone_locator, phone)
         self.click_to_element(OrderPageLocators.next_button)
 
+    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
     def add_fields_in_about_rent(self, date_locator, date,
                                  rent_locator, duration_locator,
                                  color_locator,
@@ -47,6 +51,7 @@ class OrderPage(MainPage):
         self.click_to_element(complete_order_button_locator)
         self.click_to_element(yes_complete_order_button_locator)
 
+    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
     def click_to_element(self, locator):
         """Клик на элемент."""
         element = self.find_element_with_wait(locator)

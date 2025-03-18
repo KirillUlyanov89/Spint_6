@@ -7,6 +7,7 @@ from links import BASE_URL
 from locators.base_page_locators import BasePageLocators
 from locators.order_page_locators import OrderPageLocators
 from .test_data import test_data
+# ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
 
 class TestOrder:
     dict_locator = {
@@ -64,3 +65,5 @@ class TestOrder:
 
         # Проверка на успех оформления заказа
         assert "Заказ оформлен" in modal_message.text
+
+        # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing

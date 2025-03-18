@@ -4,9 +4,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from pages.main_page import BasePage
 from locators.base_page_locators import BasePageLocators
 from links import *
-
+# ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
 class TestClicksOnLogos:
-
+    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
     @allure.title("Нажатие на логотип сайта")
     @allure.description("Проверка перехода на основную страницу при клике на логотип сайта")
     @allure.link(ORDER_URL, name='https://qa-scooter.praktikum-services.ru/order')
@@ -15,6 +15,7 @@ class TestClicksOnLogos:
         main_page.click_to_element(BasePageLocators.scooter_logo)
         assert driver_start.current_url == BASE_URL, f"Expected URL: {BASE_URL}, but got: {driver_start.current_url}"
 
+    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
     @allure.title("Нажатие на логотип яндекса")
     @allure.description("Проверка перехода на Yandex Dzen при клике на логотип Yandex")
     @allure.link(BASE_URL, name='https://qa-scooter.praktikum-services.ru/')

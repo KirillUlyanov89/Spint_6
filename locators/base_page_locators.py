@@ -6,3 +6,5 @@ class BasePageLocators:
     scooter_logo = (By.XPATH, './/a[contains(@class, "Header_LogoScooter")]')
     yandex_logo = (By.XPATH, './/a[contains(@class, "Header_LogoYandex")]')
     yandex_dzen_find_button = (By.XPATH, './/button[text()="Найти"]')
+
+# ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
