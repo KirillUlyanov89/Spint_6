@@ -1,19 +1,35 @@
 from selenium.webdriver.common.by import By
-# ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
 
-class OrderPageLocators:
-    name_field = (By.CSS_SELECTOR, "[placeholder = '* Имя']")
-    surname_field = (By.CSS_SELECTOR, "[placeholder = '* Фамилия']")
-    address_field = (By.CSS_SELECTOR, "[placeholder = '* Адрес: куда привезти заказ']")
-    metro_field = (By.CSS_SELECTOR, "[placeholder = '* Станция метро']")
-    phone_field = (By.CSS_SELECTOR, "[placeholder = '* Телефон: на него позвонит курьер']")
-    next_button = (By.XPATH, ".//button[text()='Далее']")
-    date_when_to_bring_a_scooter_field = (By.CSS_SELECTOR, "[placeholder = '* Когда привезти самокат']")
-    rental_period_dropdown_menu = (By.XPATH, ".//div[@class='Dropdown-placeholder']")
-    one_day_in_rental_period_menu = (By.XPATH, ".//div[@class='Dropdown-option' and text()='сутки']")
-    checkbox_select_black_color_of_the_scooter = (By.XPATH, ".//input[@id='grey']")
-    checkbox_select_grey_color_of_the_scooter = (By.XPATH, ".//input[@id='grey']")
-    comment_field = (By.CSS_SELECTOR, "[placeholder = 'Комментарий для курьера']")
-    order_button_for_complete_the_order = (By.XPATH, ".//button[contains(@class, 'Button_Middle') and text()='Заказать']")
-    order_button_for_yes_the_order = (By.XPATH, ".//button[contains(@class, 'Button_Middle') and text()='Да']")
-    modal_of_successful_order = (By.XPATH, ".//div[contains(@class, 'Order_ModalHeader')]")
+# Локаторы для формы заполнения пользователя
+USER_INFO_FORM = (By.XPATH, '//div[contains(@class, "Order_Form")]')
+USER_INFO_HEADER = (By.XPATH, '//div[contains(@class, "Order_Header") and text()="Для кого самокат"]')
+
+# Локаторы для полей заполнения формы пользователя
+class UserForm:
+    FIRST_NAME = (By.XPATH, '//input[@placeholder="* Имя"]')
+    LAST_NAME = (By.XPATH, '//input[@placeholder="* Фамилия"]')
+    ADDRESS = (By.XPATH, '//input[@placeholder="* Адрес: куда привезти заказ"]')
+    METRO_STATION = (By.XPATH, '//input[@placeholder="* Станция метро"]')
+    METRO_STATION_LIST = (By.XPATH, '//div[@class="select-search__select"]')
+    METRO_STATION_BUTTON = (By.XPATH, '//button[contains(@class, "select-search__option")]//div[text()="{}"]')
+    PHONE_NUMBER = (By.XPATH, '//input[@placeholder="* Телефон: на него позвонит курьер"]')
+    NEXT_BUTTON = (By.XPATH, '//div[contains(@class, "Order_NextButton")]/button')
+
+# Локатор для формы заполнения деталей аренды
+RENT_INFO_HEADER = (By.XPATH, '//div[contains(@class, "Order_Header") and text()="Про аренду"]')
+
+# Локаторы для полей заполнения формы данных аренды
+class RentForm:
+    START_DATE = (By.XPATH, '//input[@placeholder="* Когда привезти самокат"]')
+    RENT_PERIOD = (By.XPATH, '//span[@class="Dropdown-arrow"]')
+    RENT_PERIOD_ITEM = (By.XPATH, '//div[contains(@class, "Dropdown-option") and text()="{}"]')
+    BLACK_COLOR = (By.ID, 'black')
+    GREY_COLOR = (By.ID, 'grey')
+    COMMENT = (By.XPATH, '//input[@placeholder="Комментарий для курьера"]')
+    ORDER_BUTTON = (By.XPATH, '//div[contains(@class, "Order_Buttons")]//button[text()="Заказать"]')
+
+# Локатор кнопки подтверждения заказа в окне "Хотите оформить заказ?"
+RENT_CONFIRMATION_BUTTON = (By.XPATH, '//button[text()="Да"]')
+
+# Локатор для заголовка с окна "Заказ оформлен"
+ORDER_DONE_HEADER = (By.XPATH, '//div[contains(@class, "Order_ModalHeader")]')

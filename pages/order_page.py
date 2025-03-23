@@ -1,58 +1,63 @@
-from selenium.webdriver.common.keys import Keys
-from locators.order_page_locators import OrderPageLocators
-from pages.main_page import MainPage
-# ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
-class OrderPage(MainPage):
+import allure
+import locators.order_page_locators as locators
+from pages.base_page import BasePage
 
-    def add_text_to_element(self, locator, text):
-        self.find_element_with_wait(locator).send_keys(text)
 
-    def add_metro_in_dropdown_menu(self, locator, metro):
-        element = self.find_element_with_wait(locator)
-        element.send_keys(metro)
-        element.send_keys(Keys.DOWN)
-        element.send_keys(Keys.ENTER)
+class OrderPage(BasePage):
 
-    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
-    def add_data_to_when_to_bring_a_scooter_field(self, locator, date):
-        element = self.find_element_with_wait(locator)
-        element.send_keys(date)
-        element.send_keys(Keys.ENTER)
+    @allure.step('Ожидание появления формы "Для кого самокат"')
+    def wait_user_info_form(self):
+        self.find_element(locators.USER_INFO_FORM)
 
-    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
-    def select_rental_period(self, field_locator, duration_locator):
-        self.find_element_with_wait(field_locator).click()
-        self.find_element_with_wait(duration_locator).click()
+    @allure.step('Получение заголовка формы "Для кого самокат"')
+    def get_user_info_header(self):
+        return self.find_element(locators.USER_INFO_HEADER)
 
-    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
-    def add_fields_in_who_is_the_scooter_for(self, name_locator, name,
-                                             surname_locator, surname,
-                                             address_locator, address,
-                                             metro_locator, metro,
-                                             phone_locator, phone):
-        self.add_text_to_element(name_locator, name)
-        self.add_text_to_element(surname_locator, surname)
-        self.add_text_to_element(address_locator, address)
-        self.add_metro_in_dropdown_menu(metro_locator, metro)
-        self.add_text_to_element(phone_locator, phone)
-        self.click_to_element(OrderPageLocators.next_button)
+    @allure.step('Выбор станции метро в форме "Для кого самокат"')
+    def select_metro_station(self, station_name):
+        self.click_to_element(locators.UserForm.METRO_STATION)
+        self.find_element(locators.UserForm.METRO_STATION_LIST)
+        station_button_locator = (
+            locators.UserForm.METRO_STATION_BUTTON[0],
+            locators.UserForm.METRO_STATION_BUTTON[1].format(station_name)
+        )
+        self.click_to_element(station_button_locator)
 
-    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
-    def add_fields_in_about_rent(self, date_locator, date,
-                                 rent_locator, duration_locator,
-                                 color_locator,
-                                 comment_locator, comment,
-                                 complete_order_button_locator,
-                                 yes_complete_order_button_locator):
-        self.add_data_to_when_to_bring_a_scooter_field(date_locator, date)
-        self.select_rental_period(rent_locator, duration_locator)
-        self.click_to_element(color_locator)
-        self.add_text_to_element(comment_locator, comment)
-        self.click_to_element(complete_order_button_locator)
-        self.click_to_element(yes_complete_order_button_locator)
+    @allure.step('Заполнение формы "Для кого самокат"')
+    def fill_user_info_form(self, user_info):
+        self.text_input_to_element(locators.UserForm.FIRST_NAME, user_info['first_name'])
+        self.text_input_to_element(locators.UserForm.LAST_NAME, user_info['last_name'])
+        self.text_input_to_element(locators.UserForm.ADDRESS, user_info['address'])
+        self.text_input_to_element(locators.UserForm.PHONE_NUMBER, user_info['phone_number'])
+        self.select_metro_station(user_info['metro_station'])
+        self.click_to_element(locators.UserForm.NEXT_BUTTON)
 
-    # ПОСМОТРИТЕ ВИДЕО РАБОТЫ КОДА https://drive.google.com/file/d/1lmrM793x4B73Nygb18GYq5QZZ5IjA24E/view?usp=sharing
-    def click_to_element(self, locator):
-        """Клик на элемент."""
-        element = self.find_element_with_wait(locator)
-        element.click()
+    @allure.step('Получаем заголовок формы "Про аренду"')
+    def get_rent_info_header(self):
+        return self.find_element(locators.RENT_INFO_HEADER)
+
+    @allure.step('Выбор периода аренды')
+    def select_rent_period(self, rent_period):
+        self.click_to_element(locators.RentForm.RENT_PERIOD)
+        self.click_to_element(self.format_locator(locators.RentForm.RENT_PERIOD_ITEM, rent_period))
+
+    @allure.step('Заполнение формы "Про аренду"')
+    def fill_rent_info_form(self, rent_info):
+        self.text_input_to_element(locators.RentForm.START_DATE, rent_info['start_date'])
+        self.select_rent_period(rent_info['rent_period'])
+        if rent_info['color'] == 'black':
+            self.click_to_element(locators.RentForm.BLACK_COLOR)
+            self.click_to_element(locators.RentForm.GREY_COLOR)
+        self.text_input_to_element(locators.RentForm.COMMENT, rent_info['comment'])
+
+    @allure.step('Клик по кнопке "Заказать" на форме "Про аренду"')
+    def click_order_finish_button(self):
+        self.click_to_element(locators.RentForm.ORDER_BUTTON)
+
+    @allure.step('Клик по кнопке "Да" в диалоге подтверждения заказа')
+    def confirm_rent(self):
+        self.click_to_element(locators.RENT_CONFIRMATION_BUTTON)
+
+    @allure.step('Получение заголовка диалога с информацией о заказе')
+    def get_order_info_header(self):
+        return self.find_element(locators.ORDER_DONE_HEADER)
